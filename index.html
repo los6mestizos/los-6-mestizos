@@ -176,6 +176,7 @@
             display: inline-block;
         }
         .btn-main:hover { transform: scale(1.05); background: #e67e00; box-shadow: 0 8px 25px rgba(255,140,0,0.5); }
+        
 
         /* --- SECCIÓN NOSOTROS CON FUSIÓN MESTIZA --- */
         .nosotros { padding: 100px 10%; background: var(--blanco); text-align: center; }
@@ -443,13 +444,47 @@
 
             /* 5. Personajes asomados: Más pequeños para no estorbar */
             .personaje-asomado {
-                width: 80px;
+                width: 80px;  
                 bottom: 20px;
             }
             
             /* Ocultar botones que estorben en el nav móvil */
             nav .btn-main { display: none; } 
         }
+        .resumen-box {
+            border: 1px solid #eee;
+            border-radius: 15px;
+            overflow: hidden;
+            background: #fff;
+            margin-top: 20px;
+        }
+        .resumen-item {
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        
+        .resumen-item:last-child { border-bottom: none; }
+        .resumen-label { display: flex; align-items: center; gap: 10px; color: #333; }
+        .resumen-val { font-weight: bold; color: #000; text-align: right; }
+        
+        .total-destacado {
+            background: #fdf7f2;
+            padding: 20px;
+            text-align: right;
+            border-top: 2px solid #eee;
+        }
+        #final-screen { display: none; text-align: center; padding: 50px 20px; }
+        .hero { height: 95vh; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('fondo.jpg') no-repeat center center; background-size: cover; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; }
+
+        @keyframes fadeIn { from { opacity:0; transform: translateY(10px); } to { opacity:1; transform: translateY(0); } }
+
+        @media (max-width: 768px) {
+            .selection-grid { grid-template-columns: repeat(2, 1fr); }
+            }
+       
         
     </style>
     <meta name="google-site-verification" content="Uc2PedCK62Dvu4duV01_fsMOYb14Pq7teqoEgAKB7hU" />
@@ -574,7 +609,7 @@
                     <div class="product-info">
                         <div>
                             <h3>Chilaquiles Combinados</h3>
-                            <p>I"La dualidad de la cocina mexicana: frescura y calidez en un solo plato".</p>
+                            <p>"La dualidad de la cocina mexicana: frescura y calidez en un solo plato".</p>
                         </div>
                         <a onclick="showOrder()" class="btn-main" style="padding: 10px 20px; font-size: 0.9rem; margin-top: auto;">Pedir</a>
                     </div>
@@ -683,7 +718,7 @@
                         <span class="title-card">Cebolla</span>
                     </div>
                 </div>
-                <button class="btn-main" style="background: #fff; color: #333; border: 1px solid #ccc;" onclick="goToStep(0)">← Regresar</button>
+                <button class="btn-main" style="background: #fff; color: #333; border: 1px solid #ccc;" onclick="goToStep(1)">← Regresar</button>
                 <button class="btn-main" style="width:60%" onclick="goToStep(2)">Continuar</button>
             </div>
 
@@ -694,23 +729,22 @@
                 <div class="multi-info">✓ Selección múltiple — opcional</div>
 
                 <div class="selection-grid" style="grid-template-columns: repeat(4, 1fr);">
-                    <div class="card-select" data-type="extras" data-val="Aguacate" onclick="toggleMulti(this)">
-                        <span style="font-size: 2rem;">🥑</span><br>
-                        <span class="title-card">Aguacate</span><span class="price-tag">+$10</span>
+                    <div class="card-select" data-type="extras" data-val="Aguacate" data-price="10"  onclick="toggleMulti(this)">
+                        <span style="font-size: 2rem;">🥑<span class="title-card">Aguacate</span><span class="price-tag">+$10</span>
                     </div>
-                    <div class="card-select" data-type="extras" data-val="Más crema" onclick="toggleMulti(this)">
-                        <span style="font-size: 1.5rem;">🥛🥛</span><br>
+                    <div class="card-select" data-type="extras" data-val="Más crema" data-price="5" onclick="toggleMulti(this)">
+                        <span style="font-size: 1.5rem;">🥛🥛</span>
                         <span class="title-card">Más crema</span><span class="price-tag">+$5</span>
                     </div>
-                    <div class="card-select" data-type="extras" data-val="Más cebolla" onclick="toggleMulti(this)">
+                    <div class="card-select" data-type="extras" data-val="Más cebolla" data-price="5" onclick="toggleMulti(this)">
                         <span style="font-size: 1.5rem;">🧅🧅</span><br>
                         <span class="title-card">Más cebolla</span><span class="price-tag">+$5</span>
                     </div>
-                    <div class="card-select" data-type="extras" data-val="Más queso" onclick="toggleMulti(this)">
+                    <div class="card-select" data-type="extras" data-val="Más queso" data-price="5" onclick="toggleMulti(this)">
                         <span style="font-size: 1.5rem;">🧀🧀</span><br>
                         <span class="title-card">Más queso</span><span class="price-tag">+$5</span>
                     </div>
-                    <div class="card-select" data-type="extras" data-val="Más pollo" onclick="toggleMulti(this)">
+                    <div class="card-select" data-type="extras" data-val="Más pollo" data-price="5" onclick="toggleMulti(this)">
                         <span style="font-size: 1.5rem;">🍗🍗</span><br>
                         <span class="title-card">Más pollo</span><span class="price-tag">+$5</span>
                     </div>
@@ -738,28 +772,45 @@
                     <input type="text" id="nombre-cli" placeholder="¿Cómo te llamas?" style="width: 100%; padding: 15px; border: 1px solid #ccc; border-radius: 8px;">
                 </div>
 
-                <div style="border: 1px solid #eee; border-radius: 12px; overflow: hidden; background: #fff;">
-                    <div style="padding: 15px; border-bottom: 1px solid #f5f5f5; display: flex; justify-content: space-between;">
-                        <span>🟡 Base</span> <span style="font-weight: bold;">Totopos frescos</span>
+                 <div class="resumen-box">
+                    <div class="resumen-item">
+                        <span class="resumen-label">🟡 Base</span>
+                        <span class="resumen-val">Totopos frescos</span>
                     </div>
-                    <div style="padding: 15px; border-bottom: 1px solid #f5f5f5; display: flex; justify-content: space-between;">
-                        <span>🌶️ Salsa</span> <span id="res-salsa" style="font-weight: bold;">--</span>
+                    <div class="resumen-item">
+                        <span class="resumen-label">🌶️ Salsa</span>
+                        <span id="res-salsa" class="resumen-val">--</span>
                     </div>
-                    <div style="padding: 15px; border-bottom: 1px solid #f5f5f5; display: flex; justify-content: space-between;">
-                        <span>🍳 Complementos</span> <span id="res-comp" style="font-weight: bold;">--</span>
+                    <div class="resumen-item">
+                        <span class="resumen-label">🍳 Complementos</span>
+                        <span id="res-comp" class="resumen-val">--</span>
                     </div>
-                    <div style="padding: 15px; border-bottom: 1px solid #f5f5f5; display: flex; justify-content: space-between;">
-                        <span>✨ Extras</span> <span id="res-extras" style="font-weight: bold;">--</span>
+                    <div class="resumen-item">
+                        <span class="resumen-label">✨ Extras</span>
+                        <span id="res-extras" class="resumen-val">--</span>
                     </div>
-                    <div style="padding: 15px; display: flex; justify-content: space-between;">
-                        <span>📝 Notas</span> <span id="res-notas" style="font-weight: bold;">--</span>
+                    <div class="resumen-item">
+                        <span class="resumen-label">📝 Notas</span>
+                        <span id="res-notas" class="resumen-val">--</span>
+                    </div>
+                    <div class="total-destacado">
+                        <span style="font-size: 1.1rem; color: #666;">Total a pagar:</span><br>
+                        <strong id="res-total" style="font-size: 1.8rem; color: var(--verde-mestizo);">$90.00</strong>
                     </div>
                 </div>
 
-                <button class="btn-whatsapp" style="margin-top: 25px;" onclick="enviarPedido()">
+
+                <button class="btn-whatsapp" onclick="enviarPedido()">
                     <i class="fab fa-whatsapp"></i> Enviar pedido por WhatsApp
                 </button>
-                <button class="btn-main" style="width: 100%; background: none; color: #666; margin-top: 10px;" onclick="goToStep(2)">← Regresar y editar</button>
+                <button class="btn-outline" style="width: 100%; margin-top: 10px; border: none;" onclick="goToStep(2)">← Regresar y editar</button>
+            </div>
+
+            <div id="final-screen">
+                <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+                <h2>¡Pedido Enviado!</h2>
+                <p id="wait-message" style="margin: 20px 0; color: #555;"></p>
+                <button class="btn-main" onclick="resetPedido()">Realizar otro pedido</button>
             </div>
         </div>
     </section>
@@ -780,12 +831,14 @@
     <p>© 2026 Los 6 Mestizos Chilaquiles - Valladolid, Yucatán. Sabor auténtico que une mundos.</p>
 </footer>
 
-    <script>
-        const pedido = { salsa: '', comp: [], extras: [], notas: '' };
+   <script>
+        const PRECIO_BASE = 90;
+        let pedido = { salsa: '', comp: [], extras: [], notas: '', total: PRECIO_BASE };
 
         function showOrder() {
             document.getElementById('main-content').style.display = 'none';
             document.getElementById('ordenar').style.display = 'block';
+            resetPedido(); // Limpia el formulario visualmente al entrar
             window.scrollTo(0,0);
         }
 
@@ -797,10 +850,10 @@
         function goToStep(step) {
             document.querySelectorAll('.order-section').forEach((s, i) => s.classList.toggle('active', i === step));
             document.querySelectorAll('.tab-btn').forEach((t, i) => t.classList.toggle('active', i === step));
+            document.getElementById('final-screen').style.display = 'none'; // Asegura que el final esté oculto
             window.scrollTo(0,0);
         }
 
-        // Selección única (Salsas)
         function selectSingle(el) {
             const type = el.dataset.type;
             document.querySelectorAll(`[data-type="${type}"]`).forEach(c => c.classList.remove('selected'));
@@ -808,25 +861,35 @@
             pedido[type] = el.dataset.val;
         }
 
-        // Selección múltiple (Complementos y Extras)
         function toggleMulti(el) {
-            const type = el.dataset.type;
             const val = el.dataset.val;
+            const type = el.dataset.type;
+            const price = parseInt(el.dataset.price || 0);
             el.classList.toggle('selected');
             
             if(el.classList.contains('selected')) {
-                pedido[type].push(val);
+                if(type === 'comp') pedido.comp.push(val);
+                else pedido.extras.push({name: val, price: price});
             } else {
-                pedido[type] = pedido[type].filter(v => v !== val);
+                if(type === 'comp') pedido.comp = pedido.comp.filter(v => v !== val);
+                else pedido.extras = pedido.extras.filter(item => item.name !== val);
             }
+            calcularTotal();
+        }
+
+        function calcularTotal() {
+            let extraTotal = pedido.extras.reduce((sum, item) => sum + item.price, 0);
+            pedido.total = PRECIO_BASE + extraTotal;
         }
 
         function updateResumen() {
             pedido.notas = document.getElementById('order-notes').value;
             document.getElementById('res-salsa').innerText = pedido.salsa || 'No seleccionada';
             document.getElementById('res-comp').innerText = pedido.comp.join(', ') || 'Ninguno';
-            document.getElementById('res-extras').innerText = pedido.extras.join(', ') || 'Ninguno';
+            const nombresExtras = pedido.extras.map(item => item.name).join(', ');
+            document.getElementById('res-extras').innerText = nombresExtras || 'Ninguno';
             document.getElementById('res-notas').innerText = pedido.notas || '--';
+            document.getElementById('res-total').innerText = `$${pedido.total}.00`;
             goToStep(3);
         }
 
@@ -834,15 +897,40 @@
             const nombre = document.getElementById('nombre-cli').value;
             if(!nombre) return alert("Por favor escribe tu nombre para la orden");
 
+            const nombresExtras = pedido.extras.map(item => item.name).join(', ');
+
             const msg = `*ORDEN DE CHILAQUILES* 📋%0A%0A` +
                         `*Nombre:* ${nombre}%0A` +
                         `*Salsa:* ${pedido.salsa}%0A` +
                         `*Complementos:* ${pedido.comp.join(', ')}%0A` +
-                        `*Extras:* ${pedido.extras.join(', ')}%0A` +
-                        `*Notas:* ${pedido.notas}%0A%0A` +
+                        `*Extras:* ${nombresExtras || 'Ninguno'}%0A` +
+                        `*Notas:* ${pedido.notas}%0A` +
+                        `*Total:* $${pedido.total}.00%0A%0A` +
                         `_Enviado desde el sitio web_`;
 
-            window.open(`https://wa.me/529851016737?text=${msg}`);
+            // Abrir WhatsApp
+            window.open(`https://wa.me/529851074732?text=${msg}`);
+
+            // Mostrar pantalla final con tiempo de espera
+            document.getElementById('sec3').classList.remove('active');
+            const finalScreen = document.getElementById('final-screen');
+            finalScreen.style.display = 'block';
+            
+            // Tiempo aproximado (puedes cambiarlo según el día)
+            document.getElementById('wait-message').innerHTML = `Tu pedido estará listo en aproximadamente <b>15-20 minutos</b>.<br>¡Gracias por tu preferencia!`;
+        }
+
+        function resetPedido() {
+            // Reiniciar objeto pedido
+            pedido = { salsa: '', comp: [], extras: [], notas: '', total: PRECIO_BASE };
+            
+            // Limpiar visualmente selecciones e inputs
+            document.querySelectorAll('.card-select').forEach(c => c.classList.remove('selected'));
+            document.getElementById('order-notes').value = '';
+            document.getElementById('nombre-cli').value = '';
+            
+            // Volver al paso 1
+            goToStep(0);
         }
     </script>
 </body>
