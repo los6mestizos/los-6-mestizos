@@ -832,15 +832,15 @@
 </footer>
 
    <script>
-        const PRECIO_BASE = 90;
-        let pedido = { salsa: '', comp: [], extras: [], notas: '', total: PRECIO_BASE };
-
-        function showOrder() {
-            document.getElementById('main-content').style.display = 'none';
-            document.getElementById('ordenar').style.display = 'block';
-            resetPedido(); // Limpia el formulario visualmente al entrar
-            window.scrollTo(0,0);
-        }
+       function selectSingle(el) {
+    const type = el.dataset.type;
+    // Quita la clase 'selected' de todos los hermanos del mismo tipo
+    document.querySelectorAll(`[data-type="${type}"]`).forEach(c => c.classList.remove('selected'));
+    // Marca el actual
+    el.classList.add('selected');
+    // Guarda el valor (ahora sobreescribe el anterior)
+    pedido[type] = el.dataset.val;
+}
 
         function showHome() {
             document.getElementById('main-content').style.display = 'block';
